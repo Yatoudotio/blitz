@@ -208,8 +208,8 @@ export class Field {
 
   private getAttributes() {
     const possibleAttributes = [
-      this.getId(),
       this.getDefault(),
+      this.getId(),
       this.getIsUnique(),
       this.getIsUpdatedAt(),
       this.getRelation(),

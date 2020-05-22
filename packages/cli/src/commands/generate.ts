@@ -29,7 +29,7 @@ enum ResourceType {
   Mutations = 'mutations',
   Pages = 'pages',
   Queries = 'queries',
-  // Resource = 'resource',
+  Resource = 'resource',
 }
 
 interface Flags {
@@ -65,13 +65,13 @@ function ModelNames(input: string = '') {
 }
 
 const generatorMap = {
-  [ResourceType.All]: [PageGenerator, FormGenerator, QueryGenerator, MutationGenerator],
+  [ResourceType.All]: [PageGenerator, FormGenerator, QueryGenerator, MutationGenerator, ModelGenerator],
   [ResourceType.Crud]: [MutationGenerator, QueryGenerator],
   [ResourceType.Model]: [ModelGenerator],
   [ResourceType.Mutations]: [MutationGenerator],
   [ResourceType.Pages]: [PageGenerator, FormGenerator],
   [ResourceType.Queries]: [QueryGenerator],
-  // [ResourceType.Resource]: [/*ModelGenerator*/ QueryGenerator, MutationGenerator],
+  [ResourceType.Resource]: [ModelGenerator, QueryGenerator, MutationGenerator],
 }
 
 export class Generate extends Command {
