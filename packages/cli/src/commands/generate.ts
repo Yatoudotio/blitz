@@ -128,6 +128,19 @@ export class Generate extends Command {
 # app/tasks/pages/projects/[projectId]/tasks/
 > blitz generate all tasks --parent=projects
     `,
+    `# Database models can also be generated directly from the CLI
+# Model fields can be specified with any generator that generates
+# a database model ("all", "model", "resource"). Both of the below
+# will generate the proper database model for a Task.
+> blitz generate model task \\
+    name:string \\
+    completed:boolean:default[false] \\
+    belongsTo:project?
+> blitz generate pages tasks \\
+    name:string \\
+    completed:boolean:default[false] \\
+    belongsTo:project?
+    `,
   ]
 
   async promptForTargetDirectory(paths: string[]): Promise<string> {
