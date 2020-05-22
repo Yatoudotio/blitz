@@ -83,7 +83,7 @@ export class Generate extends Command {
       name: 'type',
       required: true,
       description: 'What files to generate',
-      options: Object.keys(generatorMap),
+      options: Object.keys(generatorMap).map((s) => s.toLowerCase()),
     },
     {
       name: 'model',
