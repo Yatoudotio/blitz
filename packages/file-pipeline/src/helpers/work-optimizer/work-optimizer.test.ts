@@ -1,6 +1,7 @@
 import {createWorkOptimizer} from '.'
 import {testStreamItems} from '../../test-utils'
 import {pipeline} from '../../streams'
+import {normalize} from 'path'
 import File from 'vinyl'
 
 function logItem(fileOrString: {path: string} | string) {
@@ -16,7 +17,7 @@ describe('agnosticSource', () => {
     triage.write(
       new File({
         hash: 'one',
-        path: '/path/to/one',
+        path: normalize('/path/to/one'),
         content: Buffer.from('one'),
       }),
     )
@@ -24,7 +25,7 @@ describe('agnosticSource', () => {
     triage.write(
       new File({
         hash: 'two',
-        path: '/path/to/two',
+        path: normalize('/path/to/two'),
         content: Buffer.from('two'),
       }),
     )
@@ -32,7 +33,7 @@ describe('agnosticSource', () => {
     triage.write(
       new File({
         hash: 'three',
-        path: '/path/to/three',
+        path: normalize('/path/to/three'),
         content: Buffer.from('three'),
       }),
     )
@@ -47,7 +48,7 @@ describe('agnosticSource', () => {
     triage.write(
       new File({
         hash: 'one',
-        path: '/path/to/one',
+        path: normalize('/path/to/one'),
         content: Buffer.from('one'),
       }),
     )
@@ -55,7 +56,7 @@ describe('agnosticSource', () => {
     triage.write(
       new File({
         hash: 'one',
-        path: '/path/to/one',
+        path: normalize('/path/to/one'),
         content: Buffer.from('one'),
       }),
     )
@@ -63,12 +64,12 @@ describe('agnosticSource', () => {
     triage.write(
       new File({
         hash: 'two',
-        path: '/path/to/two',
+        path: normalize('/path/to/two'),
         content: Buffer.from('two'),
       }),
     )
 
-    const expected = ['/path/to/one', '/path/to/two']
+    const expected = ['/path/to/one', '/path/to/two'].map(normalize)
     const stream = pipeline(triage, reportComplete)
     await testStreamItems(stream, expected, logItem)
   })
