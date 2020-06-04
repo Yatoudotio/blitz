@@ -38,7 +38,7 @@ describe('agnosticSource', () => {
       }),
     )
 
-    const expected = ['/path/to/one', '/path/to/two', '/path/to/three']
+    const expected = ['/path/to/one', '/path/to/two', '/path/to/three'].map(normalize)
     const stream = pipeline(triage, reportComplete)
     await testStreamItems(stream, expected, logItem)
   })
