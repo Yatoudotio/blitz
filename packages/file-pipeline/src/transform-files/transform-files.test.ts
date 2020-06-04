@@ -2,7 +2,7 @@ import through2 from 'through2'
 import {testStreamItems} from '../test-utils'
 import File from 'vinyl'
 import {transformFiles} from '.'
-
+import {normalize} from 'path'
 function logFile(file: File | string) {
   if (typeof file === 'string') {
     return file
@@ -26,20 +26,20 @@ describe('transformFiles', () => {
 
     source.stream.write(
       new File({
-        path: '/foo/one',
+        path: normalize('/foo/one'),
         content: Buffer.from('one'),
       }),
     )
 
     source.stream.write(
       new File({
-        path: '/foo/two',
+        path: normalize('/foo/two'),
         content: Buffer.from('two'),
       }),
     )
     source.stream.write(
       new File({
-        path: '/foo/three',
+        path: normalize('/foo/three'),
         content: Buffer.from('three'),
       }),
     )
@@ -48,8 +48,12 @@ describe('transformFiles', () => {
 
     // Close the test when these are both done
     await Promise.all([
-      testStreamItems(writer.stream, ['/foo/one', '/foo/two', '/foo/three', 'ready'], logFile),
-      transformFiles('/foo', [], '/bar', {source, writer, noclean: true}),
+      testStreamItems(
+        writer.stream,
+        ['/foo/one', '/foo/two', '/foo/three'].map(normalize).concat(['ready']),
+        logFile,
+      ),
+      transformFiles(normalize('/foo'), [], normalize('/bar'), {source, writer, noclean: true}),
     ])
   })
 })
